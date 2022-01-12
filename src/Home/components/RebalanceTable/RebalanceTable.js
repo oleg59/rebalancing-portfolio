@@ -2,20 +2,11 @@ import React, {useState} from 'react';
 import RebalanceTableTr from './RebalanceTableTr/RebalanceTableTr'
 
 const RebalanceTable = () => {
-    const [tableData, setTableData] = useState([
-        {
-            ticker: 'FXUS',
-            currentPrice: 6000,
-            amount: 10,
-            share: 60
-        },
-        {
-            ticker: 'FXDM',
-            currentPrice: 80,
-            amount: 8,
-            share: 40
-        }
-    ]);
+    const [tableData, setTableData] = useState([{}]);
+
+    const tableRows = tableData.map((data, index) =>
+        <RebalanceTableTr key={index} data={data} handleChange={(event, name) => handleChangeTableData(event, name, index)}/>
+    );
 
     const handleChangeTableData = (event, name, index) => {
         setTableData(tableData.map((data, tableDataIndex) => {
@@ -26,9 +17,9 @@ const RebalanceTable = () => {
         }));
     };
 
-    const tableRows = tableData.map((data, index) =>
-        <RebalanceTableTr key={index} data={data} handleChange={(event, name) => handleChangeTableData(event, name, index)}/>
-    );
+    const addTicker = () => {
+        setTableData([...tableData, {}])
+    };
 
     return (
         <div className="rebalance-table card">
@@ -47,6 +38,7 @@ const RebalanceTable = () => {
                     {tableRows}
                 </tbody>
             </table>
+            <button className="btn" onClick={addTicker}>Добавить тикер</button>
         </div>
     );
 };

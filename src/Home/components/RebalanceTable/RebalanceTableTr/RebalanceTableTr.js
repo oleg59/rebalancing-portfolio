@@ -29,7 +29,7 @@ const RebalanceTableTr = ({data, handleChange}) => {
                     onChange={(e) => handleChange(e, 'amount')}
                 />
             </td>
-            <td>990</td>
+            <td>0</td>
             <td>
                 <input
                     type="number"
@@ -39,7 +39,7 @@ const RebalanceTableTr = ({data, handleChange}) => {
                     onChange={(e) => handleChange(e, 'share')}
                 />
             </td>
-            <td>купить 394 штуки</td>
+            <td></td>
         </tr>
     );
 };
