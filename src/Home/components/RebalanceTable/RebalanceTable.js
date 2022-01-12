@@ -5,7 +5,12 @@ const RebalanceTable = () => {
     const [tableData, setTableData] = useState([{}]);
 
     const tableRows = tableData.map((data, index) =>
-        <RebalanceTableTr key={index} data={data} handleChange={(event, name) => handleChangeTableData(event, name, index)}/>
+        <RebalanceTableTr
+            key={index}
+            data={data}
+            handleChange={(event, name) => handleChangeTableData(event, name, index)}
+            handleRemove={() => removeTicker(index)}
+        />
     );
 
     const handleChangeTableData = (event, name, index) => {
@@ -21,6 +26,10 @@ const RebalanceTable = () => {
         setTableData([...tableData, {}])
     };
 
+    const removeTicker = (index) => {
+        setTableData(tableData.filter((data, tableDataIndex) => index !== tableDataIndex))
+    };
+
     return (
         <div className="rebalance-table card">
             <table className="table mb">
@@ -32,6 +41,7 @@ const RebalanceTable = () => {
                         <th>Сумма (руб.)</th>
                         <th>Доля (%)</th>
                         <th>Рекомендация</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>

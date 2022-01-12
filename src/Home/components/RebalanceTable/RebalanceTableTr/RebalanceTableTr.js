@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RebalanceTableTr = ({data, handleChange}) => {
+const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
     return (
         <tr>
             <td>
@@ -40,6 +40,7 @@ const RebalanceTableTr = ({data, handleChange}) => {
                 />
             </td>
             <td></td>
+            <td><button className="btn btn-danger" onClick={handleRemove}>Удалить</button></td>
         </tr>
     );
 };

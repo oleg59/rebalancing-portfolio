@@ -9,6 +9,8 @@
     --accent-color: #1890ff;
     --accent-color-hover: #095cb5;
     --border-color: #434343;
+    --danger-color: #a61d24;
+    --danger-color-hover: #6a1315;
 }
 
 * {
@@ -68,6 +70,14 @@ body {
 
 .btn:hover {
     background: var(--accent-color-hover);
+}
+
+.btn-danger {
+    background: var(--danger-color);
+}
+
+.btn-danger:hover {
+    background: var(--danger-color-hover);
 }
 
 .mb {
