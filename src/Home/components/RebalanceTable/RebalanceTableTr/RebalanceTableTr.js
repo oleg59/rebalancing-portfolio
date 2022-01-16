@@ -29,14 +29,16 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
                     onChange={(e) => handleChange(e, 'amount')}
                 />
             </td>
-            <td>0</td>
+            <td>{data.sum}</td>
+            <td>{data.currentShare}</td>
             <td>
                 <input
                     type="number"
                     className="input"
                     min="1"
-                    value={data?.share}
-                    onChange={(e) => handleChange(e, 'share')}
+                    max="99"
+                    value={data?.desiredShare}
+                    onChange={(e) => handleChange(e, 'desiredShare')}
                 />
             </td>
             <td></td>

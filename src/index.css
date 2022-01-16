@@ -54,7 +54,7 @@ body {
     text-align: center;
 }
 
-.table th {
+.table th, .table tfoot {
     background: var(--bg-second-color);
 }
 
