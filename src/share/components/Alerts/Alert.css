@@ -1,0 +1,9 @@
+.alert {
+    margin-bottom: 15px;
+    padding: 8px 15px;
+}
+
+.alert.danger {
+    background-color: #2a1215;
+    border: 1px solid #58181c;
+}

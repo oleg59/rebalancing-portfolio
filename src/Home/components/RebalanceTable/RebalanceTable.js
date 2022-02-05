@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import RebalanceTableTr from './RebalanceTableTr/RebalanceTableTr'
+import Alerts from "../../../share/components/Alerts/Alerts";
 
 const RebalanceTable = () => {
     const defaultTicker = {
@@ -17,6 +18,56 @@ const RebalanceTable = () => {
 
     const [tableData, setTableData] = useState([defaultTicker]);
     const [total, setTotal] = useState(defaultTotal);
+    const [messages, setMessages] = useState([]);
+
+    const addTicker = () => {
+        updateTable([...tableData, {...defaultTicker}])
+    };
+
+    const removeTicker = (index) => {
+        updateTable(tableData.filter((data, tableDataIndex) => index !== tableDataIndex))
+    };
+
+    const updateTicker = (event, name, index) => {
+        updateTable(tableData.map((data, tableDataIndex) => {
+            if (tableDataIndex === index) {
+                data[name] = event.target.value;
+            }
+            data.sum = data?.currentPrice && data?.amount ? data.currentPrice * data.amount : 0;
+            return data;
+        }));
+    };
+
+    const updateTable = (tableData) => {
+        const total = updateTotal(tableData);
+
+        setTableData(tableData.map(data => {
+            data.currentShare = data?.sum && total?.sum ? (data.sum / total.sum * 100).toFixed(1) : 0;
+            return data;
+        }));
+
+        validateTable(tableData, total);
+    };
+
+    const updateTotal = (data) => {
+        const newTotal = data.reduce((value, data) => {
+            value.desiredShare = value.desiredShare + +data.desiredShare;
+            value.sum = value.sum + data.sum;
+            return value;
+        }, defaultTotal);
+        setTotal(newTotal);
+        return newTotal;
+    };
+
+    const validateTable = (data, total) => {
+        const newMessages = [];
+
+        if (total.desiredShare > 100) {
+            newMessages.push('Желаемая доля больше 100%');
+        }
+
+        setMessages(newMessages);
+    }
 
     const tableRows = tableData.map((data, index) =>
         <RebalanceTableTr
@@ -27,36 +78,9 @@ const RebalanceTable = () => {
         />
     );
 
-    const updateTicker = (event, name, index) => {
-        setTableData(tableData.map((data, tableDataIndex) => {
-            if (tableDataIndex === index) {
-                data[name] = event.target.value;
-            }
-            data.sum = data?.currentPrice && data?.amount ? data.currentPrice * data.amount : 0;
-            return data;
-        }));
-
-        updateTotal();
-    };
-
-    const updateTotal = () => {
-        setTotal(tableData.reduce((value, data) => {
-            value.desiredShare = value.desiredShare + +data.desiredShare;
-            value.sum = value.sum + data.sum;
-            return value;
-        }, defaultTotal));
-    };
-
-    const addTicker = () => {
-        setTableData([...tableData, {...defaultTicker}])
-    };
-
-    const removeTicker = (index) => {
-        setTableData(tableData.filter((data, tableDataIndex) => index !== tableDataIndex))
-    };
-
     return (
         <div className="rebalance-table card">
+            <Alerts messages={messages}/>
             <table className="table mb">
                 <thead>
                     <tr>

@@ -110,3 +110,7 @@ body {
     border-color: var(--accent-color);
     outline: none;
 }
+
+.input:invalid {
+    border-color: var(--danger-color);
+}
