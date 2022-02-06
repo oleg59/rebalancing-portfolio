@@ -8,7 +8,8 @@ const RebalanceTable = () => {
         amount: 0,
         sum: 0,
         currentShare: 0,
-        desiredShare: 0
+        desiredShare: 0,
+        differenceBetweenShares: 0
     };
 
     const defaultTotal = {
@@ -42,7 +43,8 @@ const RebalanceTable = () => {
         const total = updateTotal(tableData);
 
         setTableData(tableData.map(data => {
-            data.currentShare = data?.sum && total?.sum ? (data.sum / total.sum * 100).toFixed(1) : 0;
+            data.currentShare = data?.sum && total?.sum ? +(data.sum / total.sum * 100).toFixed(1) : 0;
+            data.differenceBetweenShares = data.desiredShare ? +(data.desiredShare - data.currentShare).toFixed(1) : null;
             return data;
         }));
 
