@@ -6,14 +6,16 @@ const RebalanceTable = () => {
     const defaultTicker = {
         currentPrice: 0,
         amount: 0,
-        sum: 0,
+        currentSum: 0,
         currentShare: 0,
         desiredShare: 0,
-        differenceBetweenShares: 0
+        differenceBetweenShares: 0,
+        requiredSum: 0,
+        recommendation: 0
     };
 
     const defaultTotal = {
-        sum: 0,
+        currentSum: 0,
         desiredShare: 0
     };
 
@@ -34,7 +36,7 @@ const RebalanceTable = () => {
             if (tableDataIndex === index) {
                 data[name] = event.target.value;
             }
-            data.sum = data?.currentPrice && data?.amount ? data.currentPrice * data.amount : 0;
+            data.currentSum = data?.currentPrice && data?.amount ? data.currentPrice * data.amount : 0;
             return data;
         }));
     };
@@ -43,8 +45,10 @@ const RebalanceTable = () => {
         const total = updateTotal(tableData);
 
         setTableData(tableData.map(data => {
-            data.currentShare = data?.sum && total?.sum ? +(data.sum / total.sum * 100).toFixed(1) : 0;
+            data.currentShare = data?.currentSum && total?.currentSum ? +(data.currentSum / total.currentSum * 100).toFixed(1) : 0;
             data.differenceBetweenShares = data.desiredShare ? +(data.desiredShare - data.currentShare).toFixed(1) : null;
+            data.requiredSum = data.desiredShare ? +((data.desiredShare / 100) * total.currentSum).toFixed(1) : null;
+            data.recommendation = Math.floor(data.requiredSum - data.currentSum);
             return data;
         }));
 
@@ -54,7 +58,7 @@ const RebalanceTable = () => {
     const updateTotal = (data) => {
         const newTotal = data.reduce((value, data) => {
             value.desiredShare = value.desiredShare + +data.desiredShare;
-            value.sum = value.sum + data.sum;
+            value.currentSum = value.currentSum + data.currentSum;
             return value;
         }, defaultTotal);
         setTotal(newTotal);
@@ -104,7 +108,7 @@ const RebalanceTable = () => {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>{total.sum}</td>
+                        <td>{total.currentSum}</td>
                         <td>100</td>
                         <td>{total.desiredShare}</td>
                         <td></td>

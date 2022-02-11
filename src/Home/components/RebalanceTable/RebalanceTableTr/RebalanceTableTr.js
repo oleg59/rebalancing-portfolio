@@ -8,6 +8,13 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
         differenceBetweenShares = <span className="text-success">({data.differenceBetweenShares}%)</span>;
     }
 
+    let recommendation = null;
+    if (data.recommendation <= -1) {
+        recommendation = <span className="text-danger">Продать {-data.recommendation}шт</span>;
+    } else if (data.recommendation >= 1) {
+        recommendation = <span className="text-success">Купить {data.recommendation}шт</span>;
+    }
+
     return (
         <tr>
             <td>
@@ -36,7 +43,7 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
                     onChange={(e) => handleChange(e, 'amount')}
                 />
             </td>
-            <td>{data.sum}</td>
+            <td>{data.currentSum}</td>
             <td>{data.currentShare} {differenceBetweenShares}</td>
             <td>
                 <input
@@ -48,7 +55,7 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
                     onChange={(e) => handleChange(e, 'desiredShare')}
                 />
             </td>
-            <td></td>
+            <td>{recommendation}</td>
             <td><button className="btn btn-danger" onClick={handleRemove}>Удалить</button></td>
         </tr>
     );
