@@ -48,7 +48,7 @@ const RebalanceTable = () => {
             data.currentShare = data?.currentSum && total?.currentSum ? +(data.currentSum / total.currentSum * 100).toFixed(1) : 0;
             data.differenceBetweenShares = data.desiredShare ? +(data.desiredShare - data.currentShare).toFixed(1) : null;
             data.requiredSum = data.desiredShare ? +((data.desiredShare / 100) * total.currentSum).toFixed(1) : null;
-            data.recommendation = Math.floor(data.requiredSum - data.currentSum);
+            data.recommendation = Math.floor((data.requiredSum - data.currentSum) / data.currentPrice);
             return data;
         }));
 
