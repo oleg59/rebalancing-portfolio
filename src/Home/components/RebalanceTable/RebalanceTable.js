@@ -1,8 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import RebalanceTableTr from './RebalanceTableTr/RebalanceTableTr'
 import Alerts from "../../../share/components/Alerts/Alerts";
 
-const RebalanceTable = () => {
+const RebalanceTable = ({options}) => {
+    useEffect(() => {
+        updateTable(tableData);
+    }, [options]);
+
     const defaultTicker = {
         currentPrice: 0,
         amount: 0,
@@ -47,7 +51,7 @@ const RebalanceTable = () => {
         setTableData(tableData.map(data => {
             data.currentShare = data?.currentSum && total?.currentSum ? +(data.currentSum / total.currentSum * 100).toFixed(1) : 0;
             data.differenceBetweenShares = data.desiredShare ? +(data.desiredShare - data.currentShare).toFixed(1) : null;
-            data.requiredSum = data.desiredShare ? +((data.desiredShare / 100) * total.currentSum).toFixed(1) : null;
+            data.requiredSum = data.desiredShare ? +((data.desiredShare / 100) * (total.currentSum + options?.replenishment)).toFixed(1) : null;
             data.recommendation = Math.floor((data.requiredSum - data.currentSum) / data.currentPrice);
             return data;
         }));
