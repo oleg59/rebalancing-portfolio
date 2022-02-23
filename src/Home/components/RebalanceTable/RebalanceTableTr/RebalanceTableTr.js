@@ -22,7 +22,8 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
                     type="text"
                     className="input"
                     value={data?.ticker}
-                    onChange={(e) => handleChange(e, 'ticker')}
+                    name="ticker"
+                    onChange={handleChange}
                 />
             </td>
             <td>
@@ -31,7 +32,8 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
                     className="input"
                     min="1"
                     value={data?.currentPrice}
-                    onChange={(e) => handleChange(e, 'currentPrice')}
+                    name="currentPrice"
+                    onChange={handleChange}
                 />
             </td>
             <td>
@@ -40,7 +42,8 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
                     className="input"
                     min="1"
                     value={data?.amount}
-                    onChange={(e) => handleChange(e, 'amount')}
+                    name="amount"
+                    onChange={handleChange}
                 />
             </td>
             <td>{data.currentSum}</td>
@@ -52,7 +55,8 @@ const RebalanceTableTr = ({data, handleChange, handleRemove}) => {
                     min="1"
                     max="99"
                     value={data?.desiredShare}
-                    onChange={(e) => handleChange(e, 'desiredShare')}
+                    name="desiredShare"
+                    onChange={handleChange}
                 />
             </td>
             <td>{recommendation}</td>
