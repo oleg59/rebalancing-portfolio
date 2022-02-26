@@ -11,7 +11,9 @@ const Options = ({options, handleChangeOptions}) => {
             <label className="label mb">
                 Тип операции:
                 <select className="input" name="type" value={options?.type} onChange={handleChange}>
-                    <option value="1">Ребалансировка</option>
+                    <option value="rebadance">Ребалансировка</option>
+                    <option value="purchase">Только покупка</option>
+                    <option value="sale">Только продажа</option>
                 </select>
             </label>
             <label className="label">

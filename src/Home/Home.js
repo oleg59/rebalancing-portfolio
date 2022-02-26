@@ -55,7 +55,7 @@ const Home = () => {
             data.currentShare = data?.currentSum && total?.currentSum ? +(data.currentSum / total.currentSum * 100).toFixed(1) : 0;
             data.differenceBetweenShares = data.desiredShare ? +(data.desiredShare - data.currentShare).toFixed(1) : null;
             data.requiredSum = data.desiredShare ? +((data.desiredShare / 100) * (total.currentSum + tableOptions?.replenishment)).toFixed(1) : null;
-            data.recommendation = Math.floor((data.requiredSum - data.currentSum) / data.currentPrice);
+            data.recommendation = data.recommendation = getRecommendation(data, tableOptions);
             return data;
         }));
 
@@ -80,6 +80,19 @@ const Home = () => {
         }
 
         setMessages(newMessages);
+    }
+
+    const getRecommendation = (data, tableOptions) => {
+        const recommendation = Math.floor((data.requiredSum - data.currentSum) / data.currentPrice);
+
+        if (tableOptions?.type === 'purchase' && recommendation < 1) {
+            return null;
+        }
+        if (tableOptions?.type === 'sale' && recommendation > 0) {
+            return null;
+        }
+
+        return recommendation;
     }
 
     return (
